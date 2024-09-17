@@ -26,6 +26,16 @@ const welcome = `
 
 app.use(express.json());
 
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method);
+  console.log('Path:  ', request.path);
+  console.log('Body:  ', request.body);
+  console.log('---');
+  next();
+};
+
+app.use(requestLogger);
+
 app.get('/', (request, response) => {
   response.send(welcome);
 });
@@ -78,6 +88,12 @@ app.post('/api/notes', (request, response) => {
 
   response.json(note);
 });
+
+const unknownEndPoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' });
+};
+
+app.use(unknownEndPoint);
 
 const PORT = 3001;
 app.listen(PORT);
