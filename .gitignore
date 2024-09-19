@@ -16,7 +16,6 @@ yarn-error.log*
 jspm_packages/
 
 # Build output
-dist/
 build/
 
 # Temporary files
